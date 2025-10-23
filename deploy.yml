@@ -1,0 +1,40 @@
+name: Deploy to S3
+
+on:
+  push:
+    branches: dev-frontend # change if your default branch differs
+
+permissions:
+  id-token: write # required for OIDC
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # If you build (React/Vite/etc.), add your build steps here:
+      # - name: Setup Node
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+      # - run: npm ci
+      # - run: npm run build
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::<ACCOUNT_ID>:role/<ROLE_NAME>
+          aws-region: ap-south-1 # or your region
+
+      - name: Sync to S3
+        run: |
+          aws s3 sync ./dist s3://my-portfolio-site --delete
+        # If you don’t have a build, deploy the repo root:
+        # run: aws s3 sync . s3://my-portfolio-site --exclude ".git/*" --delete
+
+      # Optional: Invalidate CloudFront cache after deploy
+      # - name: Invalidate CloudFront
+      #   run: aws cloudfront create-invalidation --distribution-id E123ABC456 --paths "/*"
