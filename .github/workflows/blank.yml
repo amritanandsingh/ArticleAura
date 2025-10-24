@@ -28,16 +28,16 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::338605123781:role/github-s3-deploy  # your IAM role ARN
+          role-to-assume: arn:aws:iam::338605123781:role/githubRoll  # your IAM role ARN
           aws-region: ap-south-1                                           # your AWS region
 
       - name: Deploy static website to S3
         run: |
           # If your site files are in the repo root:
-          aws s3 sync . s3://your-bucket-name --exclude ".git/*" --delete
+          aws s3 sync . s3://artical-aura --exclude ".git/*" --delete
 
           # OR if your site is built into /dist:
-          # aws s3 sync dist s3://your-bucket-name --delete
+          # aws s3 sync dist s3://artical-aura --delete
 
       # Optional: CloudFront cache invalidation (if you use CloudFront)
       # - name: Invalidate CloudFront
