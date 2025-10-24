@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Send Message</title>
+    <style>
+      :root {
+        --w: min(680px, 92vw);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        margin: 0;
+        background: #f7f7fb;
+        color: #111;
+      }
+      header {
+        padding: 24px;
+        background: white;
+        border-bottom: 1px solid #eee;
+      }
+      main {
+        margin: 28px auto;
+        width: var(--w);
+        background: white;
+        border: 1px solid #eee;
+        border-radius: 14px;
+        padding: 20px;
+      }
+      h1 {
+        font-size: 20px;
+        margin: 0 0 6px;
+      }
+      p.help {
+        margin: 0;
+        color: #666;
+      }
+      form {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        margin-top: 16px;
+      }
+      input[type="text"] {
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+      }
+      button {
+        padding: 12px 16px;
+        border: 0;
+        border-radius: 10px;
+        background: #111;
+        color: #fff;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      pre {
+        background: #111;
+        color: #f1f1f1;
+        padding: 14px;
+        border-radius: 10px;
+        overflow: auto;
+      }
+      .row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-top: 12px;
+      }
+      .ok {
+        color: #0a7b34;
+        font-weight: 600;
+      }
+      .err {
+        color: #c0362c;
+        font-weight: 600;
+      }
+      footer {
+        text-align: center;
+        color: #777;
+        padding: 24px;
+      }
+      .small {
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div style="width: var(--w); margin: 0 auto">
+        <h1>Message Saver</h1>
+        <p class="help">
+          Posts a message to your API Gateway → Lambda → DynamoDB
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <label class="small" for="api">API URL</label>
+      <input
+        id="api"
+        type="url"
+        placeholder="https://xxxxxx.execute-api.<region>.amazonaws.com/messages"
+      />
+
+      <form id="form">
+        <input
+          id="msg"
+          type="text"
+          placeholder="Type a message…"
+          autocomplete="off"
+        />
+        <button id="send" type="submit">Send</button>
+      </form>
+
+      <div class="row small">
+        <span>Status:</span>
+        <span id="status">Idle</span>
+      </div>
+
+      <h3>Response</h3>
+      <pre id="out">{}</pre>
+
+      <details>
+        <summary class="small">Send a fixed, “same” message</summary>
+        <div class="row">
+          <button id="send-fixed" type="button">Send “Hello from S3!”</button>
+        </div>
+      </details>
+    </main>
+
+    <footer>
+      <p class="small">
+        Tip: in production, restrict CORS to your CloudFront/S3 domain.
+      </p>
+    </footer>
+
+    <script>
+      const $api = document.getElementById("api");
+      const $form = document.getElementById("form");
+      const $msg = document.getElementById("msg");
+      const $out = document.getElementById("out");
+      const $status = document.getElementById("status");
+      const $fixed = document.getElementById("send-fixed");
+      const $send = document.getElementById("send");
+
+      // Optional: set a default API URL here to avoid pasting each time
+      // $api.value = "https://YOUR_API_ID.execute-api.YOUR_REGION.amazonaws.com/messages";
+
+      function setStatus(text, ok) {
+        $status.textContent = text;
+        $status.className = ok ? "ok" : ok === false ? "err" : "";
+      }
+
+      async function post(message) {
+        const url = ($api.value || "").trim();
+        if (!url) throw new Error("Please enter the API URL.");
+        const res = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          const errText = data?.error || res.statusText || "Request failed";
+          throw new Error(errText);
+        }
+        return data;
+      }
+
+      async function runSend(value) {
+        if (!value || !value.trim()) {
+          setStatus("Message is required", false);
+          return;
+        }
+        setStatus("Sending…");
+        $send.disabled = true;
+        try {
+          const data = await post(value.trim());
+          $out.textContent = JSON.stringify(data, null, 2);
+          setStatus("Success", true);
+          $msg.value = "";
+        } catch (e) {
+          setStatus("Error: " + e.message, false);
+        } finally {
+          $send.disabled = false;
+        }
+      }
+
+      $form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        runSend($msg.value);
+      });
+
+      $fixed.addEventListener("click", () => runSend("Hello from S3!"));
+    </script>
+  </body>
+</html>
