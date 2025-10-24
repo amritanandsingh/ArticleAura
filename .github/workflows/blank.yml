@@ -1,0 +1,44 @@
+name: Deploy to S3
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:   # allows manual run
+
+permissions:
+  id-token: write      # REQUIRED for AWS OIDC
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Optional: if you have a build step (React/Vite etc.)
+      # - name: Setup Node
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+      # - run: npm ci
+      # - run: npm run build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::338605123781:role/github-s3-deploy  # your IAM role ARN
+          aws-region: ap-south-1                                           # your AWS region
+
+      - name: Deploy static website to S3
+        run: |
+          # If your site files are in the repo root:
+          aws s3 sync . s3://your-bucket-name --exclude ".git/*" --delete
+
+          # OR if your site is built into /dist:
+          # aws s3 sync dist s3://your-bucket-name --delete
+
+      # Optional: CloudFront cache invalidation (if you use CloudFront)
+      # - name: Invalidate CloudFront
+      #   run: aws cloudfront create-invalidation --distribution-id E123ABC456 --paths "/*"
