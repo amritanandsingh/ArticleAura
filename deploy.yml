@@ -2,10 +2,11 @@ name: Deploy to S3
 
 on:
   push:
-    branches: dev-frontend # change if your default branch differs
+    branches: ["dev-frontend"]
+  workflow_dispatch:
 
 permissions:
-  id-token: write # required for OIDC
+  id-token: write
   contents: read
 
 jobs:
@@ -15,26 +16,35 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # If you build (React/Vite/etc.), add your build steps here:
-      # - name: Setup Node
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: 20
-      # - run: npm ci
-      # - run: npm run build
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install & build
+        run: |
+          npm ci
+          npm run build   # must produce ./dist
+
+      # Optional: print the OIDC claims to verify 'sub' and 'aud'
+      - name: Debug OIDC token claims
+        run: |
+          TOKEN=$(curl -sSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r .value)
+          echo "$TOKEN" | awk -F. '{print $2}' | base64 -d 2>/dev/null | jq
 
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::338605123781:role/githubRoll
-          aws-region: ap-south-1 # or your region
+          aws-region: ap-south-1
 
       - name: Sync to S3
         run: |
-          aws s3 sync ./dist s3://my-portfolio-site --delete
-        # If you don’t have a build, deploy the repo root:
-        # run: aws s3 sync . s3://my-portfolio-site --exclude ".git/*" --delete
+          aws s3 sync ./dist s3://artical-aura --delete
 
-      # Optional: Invalidate CloudFront cache after deploy
+      - name: Verify upload
+        run: aws s3 ls s3://artical-aura --recursive | tail -n 20
+
+      # Optional CloudFront invalidation
       # - name: Invalidate CloudFront
-      #   run: aws cloudfront create-invalidation --distribution-id E123ABC456 --paths "/*"
+      #   run: aws cloudfront create-invalidation --distribution-id <DIST_ID> --paths "/*"
