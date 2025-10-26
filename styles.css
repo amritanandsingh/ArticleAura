@@ -1,0 +1,141 @@
+:root {
+  --bg: #0b1020;
+  --card: #121936;
+  --text: #e9ecff;
+  --muted: #a6b0d9;
+  --primary: #6c8cff;
+  --primary-contrast: #0b1020;
+  --border: #253056;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background: radial-gradient(
+      1200px 800px at 20% -10%,
+      #19224d,
+      transparent 70%
+    ),
+    var(--bg);
+}
+
+.container {
+  max-width: 720px;
+  margin: 6rem auto;
+  padding: 0 1rem;
+}
+
+.card {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(6px);
+}
+
+h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.8rem;
+  letter-spacing: 0.2px;
+}
+
+h2 {
+  margin-top: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.status {
+  margin-top: 1rem;
+  padding: 0.6rem 0.8rem;
+  background: rgba(108, 140, 255, 0.1);
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  font-size: 0.95rem;
+}
+
+#auth-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid transparent;
+  background: var(--primary);
+  color: var(--primary-contrast);
+  font-weight: 600;
+  padding: 0.7rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.06s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  box-shadow: 0 8px 25px rgba(108, 140, 255, 0.35);
+}
+
+.btn:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.profile {
+  margin-top: 1rem;
+}
+
+.profile dl {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 8px 16px;
+  margin: 0.75rem 0 0;
+}
+
+.profile dt {
+  color: var(--muted);
+}
+
+.profile dd {
+  margin: 0;
+}
+
+.tokens {
+  margin-top: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.6rem 0.8rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+pre {
+  margin: 0.5rem 0 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.85rem;
+  color: #cdd7ff;
+}
