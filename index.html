@@ -1,51 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>Cognito Login Demo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="./styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ArticleAura - Simple React App</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+          "Helvetica Neue", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+
+      #root {
+        min-height: 100vh;
+      }
+    </style>
   </head>
   <body>
-    <main class="container">
-      <section class="card">
-        <h1>Welcome</h1>
-        <p class="muted">Sign in with your Amazon Cognito Hosted UI</p>
-
-        <div id="auth-actions">
-          <button id="loginBtn" class="btn">Sign In</button>
-          <button id="logoutBtn" class="btn btn-outline" hidden>
-            Sign Out
-          </button>
-        </div>
-
-        <div id="status" class="status">Not signed in</div>
-
-        <div id="profile" class="profile" hidden>
-          <h2>Your profile</h2>
-          <dl>
-            <dt>Username</dt>
-            <dd id="p-username">—</dd>
-            <dt>Name</dt>
-            <dd id="p-name">—</dd>
-            <dt>Email</dt>
-            <dd id="p-email">—</dd>
-          </dl>
-          <details class="tokens">
-            <summary>Tokens (debug)</summary>
-            <pre id="tokensPre"></pre>
-          </details>
-        </div>
-      </section>
-
-      <footer class="muted">
-        <small>
-          Tip: Make sure your Cognito App Client has this page’s URL in
-          <em>Allowed callback URLs</em> and <em>Allowed sign-out URLs</em>.
-        </small>
-      </footer>
-    </main>
-
-    <script src="./app.js" type="module"></script>
+    <div id="root"></div>
   </body>
 </html>
