@@ -1,0 +1,194 @@
+.input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.input__label {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.input__required {
+  color: var(--color-error);
+  margin-left: var(--space-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.input__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: var(--space-md) var(--space-lg);
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  color: var(--text-primary);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--glass-shadow);
+  transition: all var(--transition-normal);
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+  font-weight: var(--font-weight-normal);
+}
+
+.input:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: var(--glass-bg-light);
+  box-shadow: var(--glass-shadow-hover), 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
+}
+
+.input:hover:not(.input--disabled):not(:focus) {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Sizes */
+.input--sm {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-md);
+}
+
+.input--md {
+  padding: var(--space-md) var(--space-lg);
+  font-size: var(--font-size-base);
+  border-radius: var(--radius-lg);
+}
+
+.input--lg {
+  padding: var(--space-lg) var(--space-xl);
+  font-size: var(--font-size-lg);
+  border-radius: var(--radius-xl);
+}
+
+/* States */
+.input--error {
+  border-color: var(--color-error);
+  background: rgba(248, 113, 113, 0.1);
+}
+
+.input--error:focus {
+  border-color: var(--color-error);
+  box-shadow: var(--glass-shadow-hover), 0 0 0 3px rgba(248, 113, 113, 0.2);
+}
+
+.input--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.input--disabled::placeholder {
+  color: var(--text-disabled);
+}
+
+.input-container--disabled {
+  opacity: 0.6;
+}
+
+/* Icons */
+.input--with-icon {
+  padding-left: 3rem;
+}
+
+.input__icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  pointer-events: none;
+  transition: color var(--transition-normal);
+}
+
+.input__icon--left {
+  left: var(--space-md);
+  width: 20px;
+  height: 20px;
+}
+
+.input__icon--right {
+  right: var(--space-md);
+  width: 20px;
+  height: 20px;
+}
+
+.input__password-toggle {
+  pointer-events: all;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-xs);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.input__password-toggle:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.input__password-toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Error and Helper Text */
+.input__error,
+.input__helper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+}
+
+.input__error {
+  color: var(--color-error);
+  font-weight: var(--font-weight-medium);
+}
+
+.input__helper {
+  color: var(--text-muted);
+}
+
+/* Autofill Styles */
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.1) inset;
+  -webkit-text-fill-color: var(--text-primary);
+  caret-color: var(--text-primary);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Focus visible for accessibility */
+.input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .input--lg {
+    padding: var(--space-md) var(--space-lg);
+    font-size: var(--font-size-base);
+  }
+}

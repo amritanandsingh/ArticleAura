@@ -1,12 +1,15 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
+const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  entry: "./index.js",
+  entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
     clean: true,
+    publicPath: "/",
   },
   module: {
     rules: [
@@ -28,8 +31,10 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./index.html",
+      template: "./public/index.html",
+      title: "ArticleAura - Authentication",
     }),
+    ...(!isProduction ? [new Dotenv()] : []),
   ],
   devServer: {
     static: {
@@ -39,6 +44,7 @@ module.exports = {
     port: 3000,
     hot: true,
     open: true,
+    historyApiFallback: true,
   },
   resolve: {
     extensions: [".js", ".jsx"],
