@@ -3,6 +3,9 @@ frontend:
   phases:
     preBuild:
       commands:
+        - echo "REACT_APP_USER_POOL_ID=$REACT_APP_USER_POOL_ID" > .env
+        - echo "REACT_APP_CLIENT_ID=$REACT_APP_CLIENT_ID" >> .env
+        - echo "USER_POOL_ID set:${#REACT_APP_USER_POOL_ID} chars, CLIENT_ID set:${#REACT_APP_CLIENT_ID} chars"
         - npm ci
     build:
       commands:
