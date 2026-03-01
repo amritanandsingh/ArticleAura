@@ -1,0 +1,151 @@
+.card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--glass-shadow);
+  transition: all var(--transition-normal);
+  overflow: hidden;
+}
+
+/* Variants */
+.card--default {
+  background: var(--glass-bg);
+}
+
+.card--strong {
+  background: var(--glass-bg-strong);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: var(--glass-shadow-hover);
+}
+
+.card--outline {
+  background: transparent;
+  border: 2px solid var(--glass-border);
+}
+
+.card--solid {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #1f2937;
+}
+
+.card--gradient {
+  background: linear-gradient(135deg, var(--glass-bg-light) 0%, var(--glass-bg) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Sizes */
+.card--sm {
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+}
+
+.card--md {
+  padding: var(--space-xl);
+  border-radius: var(--radius-xl);
+}
+
+.card--lg {
+  padding: var(--space-2xl);
+  border-radius: var(--radius-2xl);
+}
+
+.card--xl {
+  padding: var(--space-3xl);
+  border-radius: var(--radius-2xl);
+}
+
+/* Hover Effect */
+.card--hover {
+  cursor: pointer;
+}
+
+.card--hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--glass-shadow-hover);
+  background: var(--glass-bg-light);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Interactive states */
+.card--interactive {
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.card--interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glass-shadow-hover);
+  background: var(--glass-bg-light);
+}
+
+.card--interactive:active {
+  transform: translateY(0);
+  transition-duration: 75ms;
+}
+
+/* Focus styles for accessibility */
+.card--interactive:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Card header and content areas */
+.card__header {
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card__content {
+  line-height: 1.6;
+}
+
+.card__footer {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Special effects */
+.card--animated {
+  animation: scaleIn 0.4s ease-out forwards;
+}
+
+.card--loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.card--loading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card--lg {
+    padding: var(--space-xl);
+  }
+  
+  .card--xl {
+    padding: var(--space-2xl);
+  }
+}
