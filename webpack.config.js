@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const isProduction = process.env.NODE_ENV === 'production';
@@ -34,7 +35,12 @@ module.exports = {
       template: "./public/index.html",
       title: "ArticleAura - Authentication",
     }),
-    ...(!isProduction ? [new Dotenv()] : []),
+    isProduction
+      ? new webpack.EnvironmentPlugin([
+          'REACT_APP_USER_POOL_ID',
+          'REACT_APP_CLIENT_ID',
+        ])
+      : new Dotenv(),
   ],
   devServer: {
     static: {
