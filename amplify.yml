@@ -1,0 +1,28 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "REACT_APP_COGNITO_POOL_ID=$REACT_APP_COGNITO_POOL_ID" > .env
+        - echo "REACT_APP_CLIENT_ID=$REACT_APP_CLIENT_ID" >> .env
+        - echo "COGNITO_POOL_ID set:${#REACT_APP_COGNITO_POOL_ID} chars, CLIENT_ID set:${#REACT_APP_CLIENT_ID} chars"
+        - npm ci
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+  customHeaders:
+    - pattern: '**/*'
+      headers:
+        - key: Cache-Control
+          value: no-store
+  redirects:
+    - source: '/<*>'
+      target: '/index.html'
+      status: '200'
