@@ -2,7 +2,7 @@ const NETWORK_ERROR_MESSAGE =
   'Unable to reach the workflow API. Check that the production workflow endpoint allows this site in CORS and permits OPTIONS preflight requests with Authorization.';
 
 function getWorkflowApiUrl() {
-  return (process.env.REACT_APP_WORKFLOWS_URL || process.env.REACT_APP_HOME_PAGE_URL || '').trim();
+  return (process.env.REACT_APP_WORKFLOWS_URL || '').trim();
 }
 
 function buildWorkflowRequestUrl(apiUrl, email) {
@@ -31,6 +31,10 @@ async function parseWorkflowResponse(response) {
     data = await response.json();
   } catch {
     throw new Error('Workflow API returned a non-JSON response. Check the configured workflow endpoint URL.');
+  }
+
+  if (response.status === 404 && (data === 'Not found' || data?.message === 'Not found')) {
+    return [];
   }
 
   if (!response.ok) {
