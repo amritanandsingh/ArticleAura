@@ -5,6 +5,7 @@ import Button from './Button';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { getSession } from '../services/cognitoService';
+import { fetchWorkflowsForEmail } from '../services/workflowService';
 import './HomePage.css';
 
 const HomePage = () => {
@@ -26,37 +27,14 @@ const HomePage = () => {
     if (!email) return;
 
     const fetchWorkflows = async () => {
-      const apiUrl = process.env.REACT_APP_HOME_PAGE_URL;
-      if (!apiUrl) {
-        setError('Workflow API URL is not configured.');
-        return;
-      }
-
       setLoading(true);
       setError(null);
 
       try {
         const { session } = await getSession();
         const token = session?.getIdToken()?.getJwtToken();
-        const url = `${apiUrl}${apiUrl.includes('?') ? '&' : '?'}email=${encodeURIComponent(email)}`;
-
-        const response = await fetch(url, {
-          headers: {
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`Workflow request failed (${response.status})`);
-        }
-
-        const data = await response.json();
-        if (!data.success) {
-          throw new Error(data.message || 'Failed to load workflows.');
-        }
-
-        setWorkflows(Array.isArray(data.workflows) ? data.workflows : []);
+        const userWorkflows = await fetchWorkflowsForEmail(email, token);
+        setWorkflows(userWorkflows);
       } catch (err) {
         setError(err?.message || 'Unable to load workflows.');
       } finally {
