@@ -114,3 +114,108 @@
     font-size: var(--font-size-xl);
   }
 }
+
+.home-page__workflow-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+}
+
+.home-page__workflow-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.home-page__workflow-header h2 {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  color: var(--text-primary);
+}
+
+.home-page__workflow-summary {
+  margin: var(--space-xs) 0 var(--space-sm);
+  color: var(--text-muted);
+}
+
+.home-page__workflow-list {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.home-page__workflow-card {
+  padding: var(--space-lg);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+}
+
+.home-page__workflow-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.home-page__workflow-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: var(--font-weight-semibold);
+}
+
+.home-page__workflow-status--active {
+  background: rgba(56, 189, 248, 0.16);
+  color: #7dd3fc;
+}
+
+.home-page__workflow-status--draft {
+  background: rgba(251, 191, 36, 0.16);
+  color: #fcd34d;
+}
+
+.home-page__workflow-status--inactive {
+  background: rgba(148, 163, 184, 0.16);
+  color: #cbd5e1;
+}
+
+.home-page__workflow-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.home-page__workflow-steps {
+  margin-top: var(--space-sm);
+}
+
+.home-page__workflow-steps ol {
+  margin: var(--space-xs) 0 0;
+  padding-left: var(--space-lg);
+}
+
+.home-page__workflow-steps li {
+  margin-bottom: var(--space-1);
+}
+
+.home-page__status,
+.home-page__error,
+.home-page__empty {
+  color: var(--text-muted);
+}
+
+.home-page__error {
+  color: #f87171;
+}
