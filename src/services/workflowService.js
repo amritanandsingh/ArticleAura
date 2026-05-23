@@ -2,7 +2,7 @@ const NETWORK_ERROR_MESSAGE =
   'Unable to reach the workflow API. Check that the production workflow endpoint allows this site in CORS and permits OPTIONS preflight requests with Authorization.';
 
 function getWorkflowApiUrl() {
-  return (process.env.REACT_APP_WORKFLOWS_URL || '').trim();
+  return (process.env.REACT_APP_HOME_PAGE_URL || '').trim();
 }
 
 function buildWorkflowRequestUrl(apiUrl, email) {

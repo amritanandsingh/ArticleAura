@@ -5,9 +5,9 @@ frontend:
       commands:
         - echo "REACT_APP_COGNITO_POOL_ID=$REACT_APP_COGNITO_POOL_ID" > .env
         - echo "REACT_APP_CLIENT_ID=$REACT_APP_CLIENT_ID" >> .env
-        - test -n "$REACT_APP_WORKFLOWS_URL" || (echo "REACT_APP_WORKFLOWS_URL is required for My Workflows" && exit 1)
-        - echo "REACT_APP_WORKFLOWS_URL=$REACT_APP_WORKFLOWS_URL" >> .env
-        - echo "COGNITO_POOL_ID set:${#REACT_APP_COGNITO_POOL_ID} chars, CLIENT_ID set:${#REACT_APP_CLIENT_ID} chars, WORKFLOWS_URL set:${#REACT_APP_WORKFLOWS_URL} chars"
+        - test -n "$REACT_APP_HOME_PAGE_URL" || (echo "REACT_APP_HOME_PAGE_URL is required for My Workflows" && exit 1)
+        - echo "REACT_APP_HOME_PAGE_URL=$REACT_APP_HOME_PAGE_URL" >> .env
+        - echo "COGNITO_POOL_ID set:${#REACT_APP_COGNITO_POOL_ID} chars, CLIENT_ID set:${#REACT_APP_CLIENT_ID} chars, HOME_PAGE_URL set:${#REACT_APP_HOME_PAGE_URL} chars"
         - npm ci
     build:
       commands:
