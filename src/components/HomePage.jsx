@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from './Button';
+import WorkflowManager from './workflows/WorkflowManager';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import { getSession } from '../services/cognitoService';
-import { fetchWorkflowsForEmail } from '../services/workflowService';
 import './HomePage.css';
 
 const HomePage = () => {
@@ -17,32 +16,6 @@ const HomePage = () => {
   const fullName = [firstName, lastName].filter(Boolean).join(' ') || 'User';
   const email = user?.email || '';
   const initials = [firstName[0], lastName[0]].filter(Boolean).join('').toUpperCase() || 'U';
-
-  const [workflows, setWorkflows] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    if (!email) return;
-
-    const fetchWorkflows = async () => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const { session } = await getSession();
-        const token = session?.getIdToken()?.getJwtToken();
-        const userWorkflows = await fetchWorkflowsForEmail(email, token);
-        setWorkflows(userWorkflows);
-      } catch (err) {
-        setError(err?.message || 'Unable to load workflows.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchWorkflows();
-  }, [email]);
 
   const handleSignOut = () => {
     logout();
@@ -94,56 +67,11 @@ const HomePage = () => {
             Welcome back, {firstName || 'there'}
           </h1>
           <p className="home-page__welcome-subtitle">
-            Here are the workflows linked to {email || 'your account'}.
+            Manage the workflows linked to {email || 'your account'}.
           </p>
         </div>
 
-        <section className="home-page__workflow-section animate-slideIn">
-          <div className="home-page__workflow-header">
-            <h2>My Workflows</h2>
-            {!loading && !error && workflows.length > 0 && (
-              <span className="home-page__workflow-count">
-                {workflows.length} {workflows.length === 1 ? 'workflow' : 'workflows'}
-              </span>
-            )}
-          </div>
-
-          {loading && <div className="home-page__status">Loading workflows…</div>}
-          {error && <div className="home-page__error">Error: {error}</div>}
-          {!loading && !error && workflows.length === 0 && (
-            <div className="home-page__empty">No workflows found for this account.</div>
-          )}
-
-          {!loading && !error && workflows.length > 0 && (
-            <div className="home-page__workflow-list">
-              {workflows.map((workflow) => (
-                <article key={workflow.id} className="home-page__workflow-card">
-                  <div className="home-page__workflow-card-header">
-                    <h3>{workflow.name}</h3>
-                    <span className={`home-page__workflow-status home-page__workflow-status--${workflow.status?.toLowerCase()}`}>
-                      {workflow.status}
-                    </span>
-                  </div>
-                  <p className="home-page__workflow-summary">{workflow.summary}</p>
-                  {Array.isArray(workflow.promptSteps) && workflow.promptSteps.length > 0 && (
-                    <div className="home-page__workflow-steps">
-                      <strong>Prompt Steps</strong>
-                      <ol>
-                        {workflow.promptSteps.map((step, index) => (
-                          <li key={index}>{step}</li>
-                        ))}
-                      </ol>
-                    </div>
-                  )}
-                  <div className="home-page__workflow-meta">
-                    <span>{workflow.category}</span>
-                    <span>{workflow.createdAt ? new Date(workflow.createdAt).toLocaleString() : ''}</span>
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
-        </section>
+        <WorkflowManager email={email} />
       </main>
 
       <div className="auth-page__bg">
