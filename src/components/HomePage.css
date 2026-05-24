@@ -1,176 +1,236 @@
 .home-page {
   position: relative;
   min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ---------- Top Navigation Bar ---------- */
+
+.home-page__nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  background: rgba(15, 18, 45, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.home-page__nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-md) var(--space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+
+.home-page__nav-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.home-page__nav-brand-text {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.home-page__nav-user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.home-page__nav-avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-xl);
-  overflow: hidden;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.35);
 }
+
+.home-page__nav-identity {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  min-width: 0;
+}
+
+.home-page__nav-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.home-page__nav-email {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.home-page__nav-signout {
+  flex-shrink: 0;
+}
+
+/* ---------- Main Container ---------- */
 
 .home-page__container {
   position: relative;
   z-index: 10;
   width: 100%;
-  max-width: 480px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-xl);
   display: flex;
   flex-direction: column;
   gap: var(--space-2xl);
   animation: fadeIn 0.8s ease-out;
 }
 
-.home-page__header {
-  text-align: center;
-}
+/* ---------- Welcome Strip ---------- */
 
-.home-page__card {
-  animation: scaleIn 0.6s ease-out 0.2s both;
-}
-
-.home-page__welcome {
-  display: flex;
-  align-items: center;
-  gap: var(--space-lg);
-  margin-bottom: var(--space-2xl);
-  padding-bottom: var(--space-2xl);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.home-page__avatar {
-  flex-shrink: 0;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-  color: white;
-  box-shadow: var(--glass-shadow);
-}
-
-.home-page__greeting {
+.home-page__welcome-strip {
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
 }
 
-.home-page__name {
-  font-size: var(--font-size-2xl);
+.home-page__welcome-title {
+  font-size: var(--font-size-3xl, 2rem);
   font-weight: var(--font-weight-bold);
   color: var(--text-primary);
-  line-height: 1.2;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0;
 }
 
-.home-page__subtitle {
-  font-size: var(--font-size-sm);
-  color: var(--text-muted);
-}
-
-.home-page__info {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
-  margin-bottom: var(--space-2xl);
-}
-
-.home-page__info-item {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-  padding: var(--space-md) var(--space-lg);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius-lg);
-}
-
-.home-page__info-label {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.home-page__info-value {
+.home-page__welcome-subtitle {
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-  color: var(--text-primary);
+  color: var(--text-muted);
+  margin: 0;
 }
 
-.home-page__signout {
-  width: 100%;
-}
-
-@media (max-width: 480px) {
-  .home-page__welcome {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .home-page__name {
-    font-size: var(--font-size-xl);
-  }
-}
+/* ---------- Workflow Section ---------- */
 
 .home-page__workflow-section {
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
-  padding: var(--space-lg);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius-xl);
 }
 
 .home-page__workflow-header {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+  flex-wrap: wrap;
 }
 
 .home-page__workflow-header h2 {
   margin: 0;
   font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
   color: var(--text-primary);
+  letter-spacing: -0.01em;
 }
 
-.home-page__workflow-summary {
-  margin: var(--space-xs) 0 var(--space-sm);
+.home-page__workflow-count {
+  font-size: var(--font-size-sm);
   color: var(--text-muted);
+  padding: 0.25rem 0.625rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
 }
 
 .home-page__workflow-list {
   display: grid;
   gap: var(--space-lg);
+  grid-template-columns: 1fr;
 }
 
+@media (min-width: 640px) {
+  .home-page__workflow-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-page__workflow-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ---------- Workflow Card ---------- */
+
 .home-page__workflow-card {
+  display: flex;
+  flex-direction: column;
   padding: var(--space-lg);
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-lg);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  transition: transform var(--transition-normal),
+              box-shadow var(--transition-normal),
+              border-color var(--transition-normal),
+              background var(--transition-normal);
+  cursor: default;
+}
+
+.home-page__workflow-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 18px 40px rgba(31, 38, 135, 0.35);
 }
 
 .home-page__workflow-card-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-md);
   margin-bottom: var(--space-sm);
 }
 
+.home-page__workflow-card-header h3 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
 .home-page__workflow-status {
+  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
-  padding: 0.35rem 0.75rem;
+  padding: 0.3rem 0.7rem;
   border-radius: 999px;
   font-size: var(--font-size-xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
 }
 
 .home-page__workflow-status--active {
@@ -188,34 +248,115 @@
   color: #cbd5e1;
 }
 
-.home-page__workflow-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-md);
-  margin-bottom: var(--space-sm);
+.home-page__workflow-summary {
+  margin: 0 0 var(--space-md);
   color: var(--text-muted);
   font-size: var(--font-size-sm);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .home-page__workflow-steps {
-  margin-top: var(--space-sm);
+  margin: 0 0 var(--space-md);
+  font-size: var(--font-size-sm);
+}
+
+.home-page__workflow-steps strong {
+  display: block;
+  margin-bottom: var(--space-xs);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .home-page__workflow-steps ol {
-  margin: var(--space-xs) 0 0;
+  margin: 0;
   padding-left: var(--space-lg);
+  color: var(--text-muted);
 }
 
 .home-page__workflow-steps li {
-  margin-bottom: var(--space-1);
+  margin-bottom: var(--space-xs);
 }
+
+.home-page__workflow-meta {
+  margin-top: auto;
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  color: var(--text-muted);
+  font-size: var(--font-size-xs);
+}
+
+/* ---------- States ---------- */
 
 .home-page__status,
 .home-page__error,
 .home-page__empty {
+  padding: var(--space-xl);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
   color: var(--text-muted);
+  text-align: center;
+  font-size: var(--font-size-sm);
 }
 
 .home-page__error {
   color: #f87171;
+  border-color: rgba(248, 113, 113, 0.3);
+  background: rgba(248, 113, 113, 0.05);
+}
+
+/* ---------- Responsive: Tablet ---------- */
+
+@media (max-width: 1023px) {
+  .home-page__nav-email {
+    display: none;
+  }
+}
+
+/* ---------- Responsive: Mobile ---------- */
+
+@media (max-width: 639px) {
+  .home-page__nav-inner {
+    padding: var(--space-sm) var(--space-md);
+    gap: var(--space-sm);
+  }
+
+  .home-page__nav-brand-text {
+    font-size: var(--font-size-base);
+  }
+
+  .home-page__nav-identity {
+    display: none;
+  }
+
+  .home-page__nav-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: var(--font-size-xs);
+  }
+
+  .home-page__container {
+    padding: var(--space-xl) var(--space-md);
+    gap: var(--space-xl);
+  }
+
+  .home-page__welcome-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .home-page__workflow-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
